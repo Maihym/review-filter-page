@@ -402,6 +402,14 @@ body {
     }
 }
 
+/* Tablet Optimizations */
+@media (max-width: 1024px) {
+    .logo {
+        max-height: calc(var(--logo-max-height) * 0.875);
+        max-width: calc(var(--logo-max-width) * 0.875);
+    }
+}
+
 /* Mobile Optimizations */
 @media (max-width: 768px) {
     .container {
@@ -409,8 +417,8 @@ body {
     }
     
     .logo {
-        max-height: 90px;
-        max-width: 225px;
+        max-height: calc(var(--logo-max-height) * 0.75);
+        max-width: calc(var(--logo-max-width) * 0.75);
     }
     
     .header h1 {
@@ -463,8 +471,8 @@ body {
 
 @media (max-width: 480px) {
     .logo {
-        max-height: 75px;
-        max-width: 180px;
+        max-height: calc(var(--logo-max-height) * 0.625);
+        max-width: calc(var(--logo-max-width) * 0.625);
     }
     
     .header h1 {
