@@ -3,34 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rate Our Service</title>
+    <title>Review Filter Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Rate Our Service</h1>
-            <p class="subtitle">Your feedback helps us improve</p>
+        <header class="header">
+            <h1>How was your experience?</h1>
+            <p>Your feedback helps us improve our service</p>
         </header>
 
-        <main>
+        <main class="main-content">
+            <!-- Star Rating Component -->
             <div class="rating-section">
                 <div class="stars-container">
-                    <div class="star" data-rating="1">★</div>
-                    <div class="star" data-rating="2">★</div>
-                    <div class="star" data-rating="3">★</div>
-                    <div class="star" data-rating="4">★</div>
-                    <div class="star" data-rating="5">★</div>
+                    <div class="stars" id="stars">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                    <p class="rating-text" id="ratingText">Tap a star to rate</p>
                 </div>
-                <p class="rating-text">Tap a star to rate</p>
             </div>
 
             <!-- Feedback Form (shown for ratings < 5) -->
             <div class="feedback-form" id="feedbackForm" style="display: none;">
-                <h2>Help Us Improve</h2>
-                <form id="feedbackFormElement">
+                <h3>Help us improve</h3>
+                <form id="improvementForm">
                     <div class="form-group">
-                        <label for="feedback">What can we do better?</label>
+                        <label for="feedback">What could we do better?</label>
                         <textarea id="feedback" name="feedback" rows="4" placeholder="Please share your feedback..."></textarea>
                     </div>
                     <div class="form-group">
@@ -41,38 +44,28 @@
                 </form>
             </div>
 
-            <!-- Review Platform Popup (shown for 5-star rating) -->
-            <div class="review-popup" id="reviewPopup" style="display: none;">
-                <h2>Thank You! 🎉</h2>
-                <p>We're thrilled you had a great experience!</p>
-                <p>Would you mind leaving us a review on one of these platforms?</p>
-                
-                <div class="review-buttons">
-                    <a href="#" class="review-btn google-btn" target="_blank">
-                        <span class="btn-icon">G</span>
-                        Google Reviews
-                    </a>
-                    <a href="#" class="review-btn yelp-btn" target="_blank">
-                        <span class="btn-icon">Y</span>
-                        Yelp
-                    </a>
-                    <a href="#" class="review-btn facebook-btn" target="_blank">
-                        <span class="btn-icon">f</span>
-                        Facebook
-                    </a>
-                    <a href="#" class="review-btn trustpilot-btn" target="_blank">
-                        <span class="btn-icon">T</span>
-                        Trustpilot
-                    </a>
+            <!-- Review Links Modal (shown for 5 stars) -->
+            <div class="modal-overlay" id="modalOverlay" style="display: none;">
+                <div class="modal">
+                    <div class="modal-header">
+                        <h3>Thank you for the 5-star rating! 🌟</h3>
+                        <button class="close-btn" id="closeModal">&times;</button>
+                    </div>
+                    <div class="modal-content">
+                        <p>We'd love it if you could share your experience with others!</p>
+                        <div class="review-links" id="reviewLinks">
+                            <!-- Review links will be dynamically generated here -->
+                        </div>
+                        <button class="skip-btn" id="skipReview">Skip for now</button>
+                    </div>
                 </div>
-                
-                <button class="close-btn" onclick="closeReviewPopup()">Maybe Later</button>
             </div>
         </main>
-    </div>
 
-    <!-- Overlay for popup -->
-    <div class="overlay" id="overlay" style="display: none;"></div>
+        <footer class="footer">
+            <p>&copy; 2025 First Electric. All rights reserved.</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
