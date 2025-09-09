@@ -18,7 +18,7 @@ const CONFIG = {
             icon: '',
             description: '',
             image: 'images/google.svg', // Path to background image (e.g., 'images/google-bg.svg')
-            fallbackColor: '' // Google blue
+            fallbackColor: '#4285f4' // Google blue
         },
         {
             name: 'Yelp',

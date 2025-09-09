@@ -305,7 +305,7 @@ body {
     display: flex;
     align-items: center;
     padding: 12px 18px;
-    background: #f8f9fa; /* Default fallback background */
+    background: transparent; /* Let images show through */
     border: 2px solid #e9ecef;
     border-radius: 12px;
     text-decoration: none;
@@ -553,21 +553,13 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     color: white;
     border-color: rgba(255, 255, 255, 0.3);
-    background: var(--bg-image, var(--bg-color)) center/contain no-repeat, rgba(0, 0, 0, 0.3) !important;
+    background: var(--bg-image, var(--bg-color)) center/contain no-repeat !important;
     position: relative;
 }
 
-/* Add a subtle overlay to make text more readable */
+/* Remove overlay for cleaner button appearance */
 .review-link.button-with-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    z-index: 0;
+    display: none;
 }
 
 .review-link.button-with-image > * {
