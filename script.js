@@ -272,8 +272,9 @@ function applyReviewButtonBackgrounds() {
             // Apply individual background image if available
             if (reviewConfig.image) {
                 link.classList.add('button-with-image');
-                // Apply background image directly
-                link.style.setProperty('background', `url(${reviewConfig.image}) center/contain no-repeat, ${reviewConfig.fallbackColor}`, 'important');
+                // Set CSS custom property for the background image
+                link.style.setProperty('--bg-image', `url(${reviewConfig.image})`);
+                link.style.setProperty('--bg-color', reviewConfig.fallbackColor);
                 
                 // Debug: Test if image loads
                 const testImg = new Image();

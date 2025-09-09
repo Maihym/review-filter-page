@@ -305,7 +305,7 @@ body {
     display: flex;
     align-items: center;
     padding: 12px 18px;
-    background: transparent; /* Let images show through */
+    background: #f8f9fa; /* Default fallback background */
     border: 2px solid #e9ecef;
     border-radius: 12px;
     text-decoration: none;
@@ -553,7 +553,7 @@ body {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     color: white;
     border-color: rgba(255, 255, 255, 0.3);
-    /* Background will be set by JavaScript */
+    background: var(--bg-image, var(--bg-color)) center/contain no-repeat !important;
     position: relative;
 }
 
