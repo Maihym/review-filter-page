@@ -93,7 +93,7 @@ const CONFIG = {
         // background: 'url("images/background.jpg") center/cover no-repeat',  // Image
         
         // Logo sizing
-        logoMaxHeight: '120px',
+        logoMaxHeight: '300px',
         logoMaxWidth: '300px',
         
         // Typography

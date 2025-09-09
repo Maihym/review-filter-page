@@ -11,6 +11,8 @@
     --success-color: #28a745;
     --error-color: #dc3545;
     --warning-color: #ffc107;
+    --logo-max-height: 120px;
+    --logo-max-width: 300px;
 }
 
 body {
@@ -44,8 +46,8 @@ body {
 }
 
 .logo {
-    max-height: 120px;
-    max-width: 300px;
+    max-height: var(--logo-max-height);
+    max-width: var(--logo-max-width);
     height: auto;
     width: auto;
     transition: all 0.3s ease;

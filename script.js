@@ -49,9 +49,6 @@ function applyConfig() {
     
     // Apply theme styling
     applyTheme();
-    
-    // Apply logo configuration
-    applyLogoConfig();
 }
 
 function applyTheme() {
@@ -64,6 +61,8 @@ function applyTheme() {
     document.documentElement.style.setProperty('--success-color', CONFIG.theme.successColor);
     document.documentElement.style.setProperty('--error-color', CONFIG.theme.errorColor);
     document.documentElement.style.setProperty('--warning-color', CONFIG.theme.warningColor);
+    document.documentElement.style.setProperty('--logo-max-height', CONFIG.theme.logoMaxHeight);
+    document.documentElement.style.setProperty('--logo-max-width', CONFIG.theme.logoMaxWidth);
     
     // Update submit button background to use config colors
     const submitBtn = document.querySelector('.submit-btn');
@@ -72,13 +71,6 @@ function applyTheme() {
     }
 }
 
-function applyLogoConfig() {
-    const logo = document.getElementById('logo');
-    if (logo) {
-        logo.style.maxHeight = CONFIG.theme.logoMaxHeight;
-        logo.style.maxWidth = CONFIG.theme.logoMaxWidth;
-    }
-}
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
