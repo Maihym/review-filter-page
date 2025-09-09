@@ -5,11 +5,20 @@
     box-sizing: border-box;
 }
 
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     min-height: 100vh;
 }
 
@@ -20,6 +29,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 /* Header Styles */
@@ -27,6 +37,23 @@ body {
     text-align: center;
     margin-bottom: 40px;
     color: white;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-height: 120px;
+    max-width: 300px;
+    height: auto;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    transform: scale(1.05);
 }
 
 .header h1 {
@@ -43,12 +70,15 @@ body {
 
 /* Main Content */
 .main-content {
-    flex: 1;
+    flex: 0 1 auto;
     background: white;
     border-radius: 20px;
-    padding: 40px 30px;
+    padding: 30px 25px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     margin-bottom: 20px;
+    max-width: 500px;
+    width: 100%;
+    align-self: center;
 }
 
 /* Star Rating Styles */
@@ -78,6 +108,14 @@ body {
     transition: all 0.2s ease;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    /* Large touch target */
+    min-width: 60px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
 }
 
 .star:hover,
@@ -95,11 +133,11 @@ body {
 }
 
 .rating-text.positive {
-    color: #28a745;
+    color: var(--success-color);
 }
 
 .rating-text.negative {
-    color: #dc3545;
+    color: var(--error-color);
 }
 
 /* Feedback Form Styles */
@@ -143,13 +181,13 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .submit-btn {
     width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
     border: none;
     padding: 15px 30px;
@@ -158,6 +196,15 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Large touch target */
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Support for background images */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .submit-btn:hover {
@@ -187,19 +234,20 @@ body {
 .modal {
     background: white;
     border-radius: 20px;
-    max-width: 500px;
+    max-width: 550px;
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
     box-shadow: 0 25px 50px rgba(0,0,0,0.3);
     animation: slideUp 0.3s ease-out;
+    margin: auto;
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 30px 15px;
+    padding: 20px 25px 15px;
     border-bottom: 1px solid #e9ecef;
 }
 
@@ -216,8 +264,11 @@ body {
     color: #999;
     cursor: pointer;
     padding: 0;
-    width: 30px;
-    height: 30px;
+    /* Large touch target */
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -231,7 +282,7 @@ body {
 }
 
 .modal-content {
-    padding: 25px 30px 30px;
+    padding: 20px 25px 25px;
 }
 
 .modal-content p {
@@ -244,29 +295,38 @@ body {
 .review-links {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 25px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .review-link {
     display: flex;
     align-items: center;
-    padding: 15px 20px;
-    background: #f8f9fa;
+    padding: 12px 18px;
+    background: #f8f9fa; /* Default fallback background */
     border: 2px solid #e9ecef;
     border-radius: 12px;
     text-decoration: none;
     color: #333;
     transition: all 0.3s ease;
     font-weight: 500;
+    /* Large touch target */
+    min-height: 56px;
+    /* Support for background images */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .review-link:hover {
-    background: #667eea;
-    color: white;
-    border-color: #667eea;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effects for review buttons with background images */
+.review-link.button-with-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .review-link .icon {
@@ -284,6 +344,15 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    /* Large touch target */
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Support for background images */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .skip-btn:hover {
@@ -337,6 +406,11 @@ body {
         padding: 15px;
     }
     
+    .logo {
+        max-height: 90px;
+        max-width: 225px;
+    }
+    
     .header h1 {
         font-size: 2rem;
     }
@@ -346,12 +420,15 @@ body {
     }
     
     .main-content {
-        padding: 30px 20px;
+        padding: 25px 20px;
         border-radius: 15px;
+        max-width: 450px;
     }
     
     .star {
         font-size: 2.5rem;
+        min-width: 50px;
+        min-height: 50px;
     }
     
     .stars {
@@ -365,30 +442,42 @@ body {
     .modal {
         width: 95%;
         margin: 20px;
+        max-width: 500px;
     }
     
-    .modal-header,
+    .modal-header {
+        padding: 15px 20px 12px;
+    }
+    
     .modal-content {
-        padding: 20px;
+        padding: 15px 20px 20px;
     }
     
     .review-link {
-        padding: 12px 15px;
+        padding: 10px 15px;
         font-size: 0.95rem;
     }
 }
 
 @media (max-width: 480px) {
+    .logo {
+        max-height: 75px;
+        max-width: 180px;
+    }
+    
     .header h1 {
         font-size: 1.8rem;
     }
     
     .main-content {
-        padding: 25px 15px;
+        padding: 20px 15px;
+        max-width: 400px;
     }
     
     .star {
         font-size: 2.2rem;
+        min-width: 48px;
+        min-height: 48px;
     }
     
     .stars {
@@ -411,22 +500,121 @@ body {
     }
 }
 
+/* Image support classes */
+.button-with-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.button-with-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+/* Override for review links specifically */
+.review-link.button-with-image::before {
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+}
+
+.button-with-image > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure text remains readable over background images */
+.submit-btn.button-with-image,
+.review-link.button-with-image,
+.skip-btn.button-with-image {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Specific styling for review buttons with images */
+.review-link.button-with-image {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--bg-image, var(--bg-color)) center/contain no-repeat, rgba(0, 0, 0, 0.3) !important;
+    position: relative;
+}
+
+/* Add a subtle overlay to make text more readable */
+.review-link.button-with-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    z-index: 0;
+}
+
+.review-link.button-with-image > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Platform-specific review button styles */
+.review-link[data-platform="google-reviews"] {
+    border-color: #4285f4;
+}
+
+.review-link[data-platform="yelp"] {
+    border-color: #ff1a1a;
+}
+
+.review-link[data-platform="facebook"] {
+    border-color: #1877f2;
+}
+
+.review-link[data-platform="better-business-bureau"] {
+    border-color: #ff6600;
+}
+
+.review-link[data-platform="angie's-list"] {
+    border-color: #7cbb00;
+}
+
 /* Touch-friendly improvements */
 @media (hover: none) and (pointer: coarse) {
     .star {
         font-size: 3.5rem;
         margin: 0 5px;
+        min-width: 60px;
+        min-height: 60px;
     }
     
     .submit-btn,
     .review-link,
     .skip-btn {
-        min-height: 48px;
+        min-height: 56px;
     }
     
     .close-btn {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
         font-size: 2.5rem;
+    }
+    
+    /* Ensure minimum spacing between touch targets */
+    .stars {
+        gap: 12px;
+    }
+    
+    .review-links {
+        gap: 12px;
     }
 }

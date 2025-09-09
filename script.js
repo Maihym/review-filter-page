@@ -1,40 +1,5 @@
-// Configuration - Easy to modify review links
-const REVIEW_LINKS = [
-    {
-        name: 'Google Reviews',
-        url: 'https://www.google.com/search?q=First+Electric+reviews',
-        icon: '🔍'
-    },
-    {
-        name: 'Yelp',
-        url: 'https://www.yelp.com/biz/first-electric',
-        icon: '⭐'
-    },
-    {
-        name: 'Facebook',
-        url: 'https://www.facebook.com/firstelectric/reviews',
-        icon: '📘'
-    },
-    {
-        name: 'Better Business Bureau',
-        url: 'https://www.bbb.org/profile/first-electric',
-        icon: '🏆'
-    },
-    {
-        name: 'Angie\'s List',
-        url: 'https://www.angi.com/companylist/us/electrical-contractors/first-electric.htm',
-        icon: '📋'
-    }
-];
-
-// Rating messages
-const RATING_MESSAGES = {
-    1: 'We\'re sorry to hear that. Please help us improve.',
-    2: 'We appreciate your feedback. Let\'s make it better.',
-    3: 'Thank you for your feedback. We can do better.',
-    4: 'Good to hear! We\'re almost there.',
-    5: 'Excellent! Thank you for the 5-star rating!'
-};
+// Configuration is now loaded from config.js
+// Access configuration values using CONFIG object
 
 // DOM Elements
 const stars = document.querySelectorAll('.star');
@@ -49,11 +14,79 @@ const improvementForm = document.getElementById('improvementForm');
 // State
 let currentRating = 0;
 
+// Configuration Application
+function applyConfig() {
+    // Apply page content
+    const pageTitle = document.getElementById('pageTitle');
+    const pageSubtitle = document.getElementById('pageSubtitle');
+    const feedbackTitle = document.getElementById('feedbackTitle');
+    const feedbackLabel = document.getElementById('feedbackLabel');
+    const emailLabel = document.getElementById('emailLabel');
+    const submitButton = document.getElementById('submitButton');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    const skipReview = document.getElementById('skipReview');
+    const footerText = document.getElementById('footerText');
+    const ratingText = document.getElementById('ratingText');
+    
+    if (pageTitle) pageTitle.textContent = CONFIG.content.title;
+    if (pageSubtitle) pageSubtitle.textContent = CONFIG.content.subtitle;
+    if (feedbackTitle) feedbackTitle.textContent = CONFIG.content.feedbackTitle;
+    if (feedbackLabel) feedbackLabel.textContent = CONFIG.content.feedbackLabel;
+    if (emailLabel) emailLabel.textContent = CONFIG.content.emailLabel;
+    if (submitButton) submitButton.textContent = CONFIG.content.submitButtonText;
+    if (modalTitle) modalTitle.textContent = CONFIG.content.modalTitle;
+    if (modalMessage) modalMessage.textContent = CONFIG.content.modalMessage;
+    if (skipReview) skipReview.textContent = CONFIG.content.skipButtonText;
+    if (footerText) footerText.textContent = CONFIG.content.footerText;
+    if (ratingText) ratingText.textContent = CONFIG.content.starRatingPrompt;
+    
+    // Apply form placeholders
+    const feedbackTextarea = document.getElementById('feedback');
+    const emailInput = document.getElementById('email');
+    if (feedbackTextarea) feedbackTextarea.placeholder = CONFIG.content.feedbackPlaceholder;
+    if (emailInput) emailInput.placeholder = CONFIG.content.emailPlaceholder;
+    
+    // Apply theme styling
+    applyTheme();
+    
+    // Apply logo configuration
+    applyLogoConfig();
+}
+
+function applyTheme() {
+    // Apply background
+    document.body.style.background = CONFIG.theme.background;
+    
+    // Apply CSS custom properties for theme
+    document.documentElement.style.setProperty('--primary-color', CONFIG.theme.primaryColor);
+    document.documentElement.style.setProperty('--secondary-color', CONFIG.theme.secondaryColor);
+    document.documentElement.style.setProperty('--success-color', CONFIG.theme.successColor);
+    document.documentElement.style.setProperty('--error-color', CONFIG.theme.errorColor);
+    document.documentElement.style.setProperty('--warning-color', CONFIG.theme.warningColor);
+    
+    // Update submit button background to use config colors
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) {
+        submitBtn.style.background = `linear-gradient(135deg, ${CONFIG.theme.primaryColor} 0%, ${CONFIG.theme.secondaryColor} 100%)`;
+    }
+}
+
+function applyLogoConfig() {
+    const logo = document.getElementById('logo');
+    if (logo) {
+        logo.style.maxHeight = CONFIG.theme.logoMaxHeight;
+        logo.style.maxWidth = CONFIG.theme.logoMaxWidth;
+    }
+}
+
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
+    applyConfig();
     initializeStars();
     initializeModal();
     initializeForm();
+    applyButtonBackgrounds();
 });
 
 // Star Rating Functionality
@@ -98,19 +131,19 @@ function updateStars(rating) {
 
 function updateRatingText(rating) {
     if (rating === 0) {
-        ratingText.textContent = 'Tap a star to rate';
+        ratingText.textContent = CONFIG.content.starRatingPrompt;
         ratingText.className = 'rating-text';
     } else {
-        ratingText.textContent = RATING_MESSAGES[rating];
+        ratingText.textContent = CONFIG.ratingMessages[rating];
         ratingText.className = `rating-text ${rating >= 4 ? 'positive' : 'negative'}`;
     }
 }
 
 function handleRatingAction(rating) {
-    if (rating < 5) {
+    if (rating < 5 && CONFIG.features.enableFeedbackForm) {
         // Show feedback form for ratings less than 5
         showFeedbackForm();
-    } else {
+    } else if (rating === 5 && CONFIG.features.enableReviewModal) {
         // Show review links modal for 5-star rating
         showReviewModal();
     }
@@ -140,7 +173,9 @@ function handleFormSubmit(e) {
     console.log('Feedback submitted:', { rating: currentRating, feedback, email });
     
     // Show success message
-    showSuccessMessage('Thank you for your feedback! We\'ll use it to improve our service.');
+    if (CONFIG.features.enableSuccessMessages) {
+        showSuccessMessage(CONFIG.content.successMessage);
+    }
     
     // Reset form
     improvementForm.reset();
@@ -181,24 +216,84 @@ function handleModalOverlayClick(e) {
 function generateReviewLinks() {
     reviewLinks.innerHTML = '';
     
-    REVIEW_LINKS.forEach(link => {
+    CONFIG.reviewLinks.forEach((link, index) => {
         const linkElement = document.createElement('a');
         linkElement.href = link.url;
         linkElement.target = '_blank';
         linkElement.rel = 'noopener noreferrer';
         linkElement.className = 'review-link';
+        linkElement.setAttribute('data-platform', link.name.toLowerCase().replace(/\s+/g, '-'));
         linkElement.innerHTML = `
             <span class="icon">${link.icon}</span>
-            <span>Leave a review on ${link.name}</span>
+            <span>${link.description}</span>
         `;
         
         // Add click tracking
-        linkElement.addEventListener('click', () => {
-            console.log(`Review link clicked: ${link.name}`);
-            // Here you could send analytics data
-        });
+        if (CONFIG.features.enableAnalytics) {
+            linkElement.addEventListener('click', () => {
+                trackEvent('review_link_clicked', {
+                    linkName: link.name,
+                    linkUrl: link.url,
+                    timestamp: new Date().toISOString()
+                });
+            });
+        }
         
         reviewLinks.appendChild(linkElement);
+    });
+    
+    // Apply background images to review links
+    applyReviewButtonBackgrounds();
+}
+
+// Button Background Functions
+function applyButtonBackgrounds() {
+    if (!CONFIG.features.enableTouchOptimization) return;
+    
+    // Apply submit button background
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn && CONFIG.images.buttonBackgrounds.submitButton) {
+        submitBtn.classList.add('button-with-image');
+        submitBtn.style.backgroundImage = `url(${CONFIG.images.buttonBackgrounds.submitButton})`;
+        submitBtn.style.background = `url(${CONFIG.images.buttonBackgrounds.submitButton}), linear-gradient(135deg, ${CONFIG.images.fallbackColors.submitButton} 0%, ${CONFIG.theme.secondaryColor} 100%)`;
+    }
+    
+    // Apply skip button background
+    const skipBtn = document.querySelector('.skip-btn');
+    if (skipBtn && CONFIG.images.buttonBackgrounds.skipButton) {
+        skipBtn.classList.add('button-with-image');
+        skipBtn.style.backgroundImage = `url(${CONFIG.images.buttonBackgrounds.skipButton})`;
+        skipBtn.style.background = `url(${CONFIG.images.buttonBackgrounds.skipButton}), ${CONFIG.images.fallbackColors.skipButton}`;
+    }
+}
+
+function applyReviewButtonBackgrounds() {
+    if (!CONFIG.features.enableTouchOptimization) return;
+    
+    const reviewLinks = document.querySelectorAll('.review-link');
+    
+    reviewLinks.forEach((link, index) => {
+        // Get the corresponding review link config
+        const reviewConfig = CONFIG.reviewLinks[index];
+        
+        if (reviewConfig) {
+            // Apply individual background image if available
+            if (reviewConfig.image) {
+                link.classList.add('button-with-image');
+                // Set CSS custom property for the background image
+                link.style.setProperty('--bg-image', `url(${reviewConfig.image})`);
+                link.style.setProperty('--bg-color', reviewConfig.fallbackColor);
+                
+                // Debug: Test if image loads
+                const testImg = new Image();
+                testImg.onload = () => console.log(`✅ Image loaded: ${reviewConfig.image}`);
+                testImg.onerror = () => console.log(`❌ Image failed to load: ${reviewConfig.image}`);
+                testImg.src = reviewConfig.image;
+            } else {
+                // Apply fallback color if no image
+                link.style.setProperty('background', reviewConfig.fallbackColor, 'important');
+            }
+        }
     });
 }
 
@@ -263,41 +358,45 @@ document.head.appendChild(style);
 
 // Analytics and tracking (optional)
 function trackEvent(eventName, data = {}) {
+    if (!CONFIG.features.enableAnalytics) return;
+    
     console.log(`Event: ${eventName}`, data);
+    
     // Here you could integrate with Google Analytics, Mixpanel, etc.
+    if (CONFIG.analytics.googleAnalyticsId) {
+        // Google Analytics integration would go here
+        // gtag('event', eventName, data);
+    }
+    
+    if (CONFIG.analytics.mixpanelToken) {
+        // Mixpanel integration would go here
+        // mixpanel.track(eventName, data);
+    }
 }
 
-// Track page load
-trackEvent('page_loaded', {
-    timestamp: new Date().toISOString(),
-    userAgent: navigator.userAgent
-});
+// Initialize analytics tracking
+if (CONFIG.features.enableAnalytics) {
+    // Track page load
+    trackEvent('page_loaded', {
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+    });
 
-// Track star ratings
-stars.forEach((star, index) => {
-    star.addEventListener('click', () => {
-        trackEvent('star_rating_clicked', {
-            rating: index + 1,
+    // Track star ratings
+    stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            trackEvent('star_rating_clicked', {
+                rating: index + 1,
+                timestamp: new Date().toISOString()
+            });
+        });
+    });
+
+    // Track form submissions
+    improvementForm.addEventListener('submit', () => {
+        trackEvent('feedback_form_submitted', {
+            rating: currentRating,
             timestamp: new Date().toISOString()
         });
     });
-});
-
-// Track form submissions
-improvementForm.addEventListener('submit', () => {
-    trackEvent('feedback_form_submitted', {
-        rating: currentRating,
-        timestamp: new Date().toISOString()
-    });
-});
-
-// Track review link clicks
-document.addEventListener('click', (e) => {
-    if (e.target.closest('.review-link')) {
-        const linkName = e.target.closest('.review-link').textContent.trim();
-        trackEvent('review_link_clicked', {
-            linkName: linkName,
-            timestamp: new Date().toISOString()
-        });
-    }
-});
+}
