@@ -336,31 +336,6 @@ body {
     font-size: 1.2rem;
 }
 
-.skip-btn {
-    width: 100%;
-    background: transparent;
-    color: #666;
-    border: 2px solid #e9ecef;
-    padding: 12px 30px;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    /* Large touch target */
-    min-height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Support for background images */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.skip-btn:hover {
-    background: #f8f9fa;
-    border-color: #ccc;
-}
 
 /* Footer */
 .footer {
@@ -543,8 +518,7 @@ body {
 
 /* Ensure text remains readable over background images */
 .submit-btn.button-with-image,
-.review-link.button-with-image,
-.skip-btn.button-with-image {
+.review-link.button-with-image {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
@@ -598,8 +572,7 @@ body {
     }
     
     .submit-btn,
-    .review-link,
-    .skip-btn {
+    .review-link {
         min-height: 56px;
     }
     

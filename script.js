@@ -7,12 +7,12 @@ const ratingText = document.getElementById('ratingText');
 const feedbackForm = document.getElementById('feedbackForm');
 const modalOverlay = document.getElementById('modalOverlay');
 const closeModal = document.getElementById('closeModal');
-const skipReview = document.getElementById('skipReview');
 const reviewLinks = document.getElementById('reviewLinks');
 const improvementForm = document.getElementById('improvementForm');
 
 // State
 let currentRating = 0;
+let feedbackFormShown = false;
 
 // Configuration Application
 function applyConfig() {
@@ -25,7 +25,6 @@ function applyConfig() {
     const submitButton = document.getElementById('submitButton');
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
-    const skipReview = document.getElementById('skipReview');
     const footerText = document.getElementById('footerText');
     const ratingText = document.getElementById('ratingText');
     
@@ -37,7 +36,6 @@ function applyConfig() {
     if (submitButton) submitButton.textContent = CONFIG.content.submitButtonText;
     if (modalTitle) modalTitle.textContent = CONFIG.content.modalTitle;
     if (modalMessage) modalMessage.textContent = CONFIG.content.modalMessage;
-    if (skipReview) skipReview.textContent = CONFIG.content.skipButtonText;
     if (footerText) footerText.textContent = CONFIG.content.footerText;
     if (ratingText) ratingText.textContent = CONFIG.content.starRatingPrompt;
     
@@ -135,9 +133,15 @@ function handleRatingAction(rating) {
     if (rating < 5 && CONFIG.features.enableFeedbackForm) {
         // Show feedback form for ratings less than 5
         showFeedbackForm();
+        feedbackFormShown = true;
     } else if (rating === 5 && CONFIG.features.enableReviewModal) {
         // Show review links modal for 5-star rating
         showReviewModal();
+        // Hide feedback form when clicking 5 stars
+        if (feedbackFormShown) {
+            feedbackForm.style.display = 'none';
+            feedbackFormShown = false;
+        }
     }
 }
 
@@ -183,7 +187,6 @@ function showReviewModal() {
 
 function initializeModal() {
     closeModal.addEventListener('click', hideModal);
-    skipReview.addEventListener('click', hideModal);
     modalOverlay.addEventListener('click', handleModalOverlayClick);
     
     // Close modal with Escape key
@@ -198,6 +201,7 @@ function hideModal() {
     modalOverlay.style.display = 'none';
     document.body.style.overflow = 'auto'; // Restore scrolling
 }
+
 
 function handleModalOverlayClick(e) {
     if (e.target === modalOverlay) {
@@ -250,13 +254,6 @@ function applyButtonBackgrounds() {
         submitBtn.style.background = `url(${CONFIG.images.buttonBackgrounds.submitButton}), linear-gradient(135deg, ${CONFIG.images.fallbackColors.submitButton} 0%, ${CONFIG.theme.secondaryColor} 100%)`;
     }
     
-    // Apply skip button background
-    const skipBtn = document.querySelector('.skip-btn');
-    if (skipBtn && CONFIG.images.buttonBackgrounds.skipButton) {
-        skipBtn.classList.add('button-with-image');
-        skipBtn.style.backgroundImage = `url(${CONFIG.images.buttonBackgrounds.skipButton})`;
-        skipBtn.style.background = `url(${CONFIG.images.buttonBackgrounds.skipButton}), ${CONFIG.images.fallbackColors.skipButton}`;
-    }
 }
 
 function applyReviewButtonBackgrounds() {

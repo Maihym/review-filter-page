@@ -49,7 +49,6 @@ const CONFIG = {
         submitButtonText: 'Submit Feedback',
         modalTitle: 'Thank you for the 5-star rating! 🌟',
         modalMessage: 'We\'d love it if you could share your experience with others!',
-        skipButtonText: 'Skip for now',
         successMessage: 'Thank you for your feedback! We\'ll use it to improve our service.',
         footerText: '© 2025 First Electric. All rights reserved.',
         // Star rating text
@@ -110,14 +109,12 @@ const CONFIG = {
         // Button background images (supports SVG, WebP, PNG, JPG)
         buttonBackgrounds: {
             submitButton: null, // Path to image file (e.g., 'images/button-bg.svg')
-            reviewButton: null, // Path to image file for review buttons
-            skipButton: null    // Path to image file for skip button
+            reviewButton: null  // Path to image file for review buttons
         },
         // Fallback colors if images are not provided
         fallbackColors: {
             submitButton: '#667eea',
-            reviewButton: '#f8f9fa',
-            skipButton: 'transparent'
+            reviewButton: '#f8f9fa'
         }
     },
 
