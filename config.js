@@ -86,7 +86,7 @@ const CONFIG = {
         warningColor: '#ffc107',        // Warning messages (yellow)
         
         // Background - you can use gradients, solid colors, or images
-        background: '#8b7b4f',
+        background: '#b89a4b',
         // Alternative backgrounds you can try:
         // background: '#667eea',  // Solid color
         // background: 'url("images/background.jpg") center/cover no-repeat',  // Image
